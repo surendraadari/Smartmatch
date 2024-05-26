@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Student Registration Form</title>
+    <!-- Cool Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap" rel="stylesheet">
+    <!-- Our stylesheet -->
+    <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+    <div id="content_container">
+        <div id="form_container">
+            <div id="form_header_container">
+                <h2 id="form_header"> Student Registration Form </h2>
+            </div>
+
+            <div id="form_content_container">
+                <div id="form_content_inner_container">
+                    <input type="text" id="full_name" placeholder="Full name">
+                    <input type="email" id="email" placeholder="Email">
+                    <input type="password" id="password" placeholder="Password">
+                    <input type="text" id="cgpa" placeholder="CGPA">
+                    
+                    <input type="number" id="num_languages" placeholder="Number of Languages Known (1-6)" min="1" max="6" onchange="createLanguageDropdowns()">
+                    <div id="languages_container"></div>
+                    
+                    <input type="text" id="projects_done" placeholder="Projects Done">
+
+                    <select id="preferred_location" name="preferred_location">
+                        <option value="Anywhere">Preferred Work Location: Anywhere</option>
+                        <option value="NotAnywhere">Preferred Work Location: Not Anywhere</option>
+                    </select>
+
+                    <div id="button_container">
+                        <button onclick="showLoginForm()">Login</button>
+                        <button onclick="register()">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="login_container" style="display:none;">
+            <div id="form_header_container">
+                <h2 id="form_header"> Login Form </h2>
+            </div>
+
+            <div id="form_content_container">
+                <div id="form_content_inner_container">
+                    <input type="email" id="login_email" placeholder="Email">
+                    <input type="password" id="login_password" placeholder="Password">
+
+                    <div id="button_container">
+                        <button onclick="login()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <!-- Our script must be loaded after firebase references -->
+    <script src="index.js"></script>
+</body>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyB3tjY2lgwyliGliWAfiZLbYCWbZkMVBlw",
+        authDomain: "studentregistration-3b935.firebaseapp.com",
+        projectId: "studentregistration-3b935",
+        storageBucket: "studentregistration-3b935.appspot.com",
+        messagingSenderId: "982207750005",
+        appId: "1:982207750005:web:ee8a0f187443f951583d3c",
+        measurementId: "G-LC5CRDRHXZ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
+
+    function showLoginForm() {
+        document.getElementById('form_container').style.display = 'none';
+        document.getElementById('login_container').style.display = 'block';
+    }
+
+    function createLanguageDropdowns() {
+        const numLanguages = document.getElementById('num_languages').value;
+        const languagesContainer = document.getElementById('languages_container');
+        languagesContainer.innerHTML = '';
+
+        const languages = ["Java", "C", "C++", "Python", "Frontend", "SQL", "MongoDB", "ReactJS", "Angular","C#","Kotlin","Javascript","Swift"];
+        
+        for (let i = 0; i < numLanguages; i++) {
+            const select = document.createElement('select');
+            select.id = 'language_' + (i + 1);
+            select.name = 'language_' + (i + 1);
+            languages.forEach(language => {
+                const option = document.createElement('option');
+                option.value = language;
+                option.textContent = language;
+                select.appendChild(option);
+            });
+            languagesContainer.appendChild(select);
+        }
+    }
+
+    function register() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const full_name = document.getElementById('full_name').value;
+        const cgpa = document.getElementById('cgpa').value;
+        const projects_done = document.getElementById('projects_done').value;
+        const preferred_location = document.getElementById('preferred_location').value;
+        const num_languages = document.getElementById('num_languages').value;
+        let languages_known = [];
+        for (let i = 0; i < num_languages; i++) {
+            languages_known.push(document.getElementById('language_' + (i + 1)).value);
+        }
+
+        if (validate_email(email) === false || validate_password(password) === false) {
+            alert('Email or Password is Outta Line!!');
+            return;
+        }
+        if (validate_field(full_name) === false || validate_field(cgpa) === false || validate_field(projects_done) === false || languages_known.length === 0) {
+            alert('One or More Extra Fields is Outta Line!!');
+            return;
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(function() {
+                var user = auth.currentUser;
+                var database_ref = database.ref();
+                var user_data = {
+                    email: email,
+                    full_name: full_name,
+                    cgpa: cgpa,
+                    languages_known: languages_known,
+                    projects_done: projects_done,
+                    preferred_location: preferred_location,
+                    last_login: Date.now()
+                };
+
+                database_ref.child('users/' + user.uid).set(user_data);
+
+                alert('User Created!!');
+                clearForm();
+            })
+            .catch(function(error) {
+                var error_message = error.message;
+                alert(error_message);
+            });
+    }
+
+    function login() {
+        const email = document.getElementById('login_email').value;
+        const password = document.getElementById('login_password').value;
+
+        if (validate_email(email) === false || validate_password(password) === false) {
+            alert('Email or Password is Outta Line!!');
+            return;
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then(function() {
+                var user = auth.currentUser;
+                var database_ref = database.ref();
+                var user_data = {
+                    last_login: Date.now()
+                };
+
+                database_ref.child('users/' + user.uid).update(user_data);
+
+                window.location.href = 'view.html?uid=' + user.uid;
+            })
+            .catch(function(error) {
+                var error_message = error.message;
+                alert(error_message);
+            });
+    }
+
+    function validate_email(email) {
+        const expression = /^[^@]+@\w+(\.\w+)+\w$/;
+        return expression.test(email);
+    }
+
+    function validate_password(password) {
+        return password.length >= 6;
+    }
+
+    function validate_field(field) {
+        return field !== null && field.length > 0;
+    }
+
+    function clearForm() {
+        document.getElementById('full_name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('cgpa').value = '';
+        document.getElementById('num_languages').value = '';
+        document.getElementById('languages_container').innerHTML = '';
+        document.getElementById('projects_done').value = '';
+        document.getElementById('preferred_location').value = 'Anywhere';
+    }
+</script>
+<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        background: -webkit-linear-gradient(25deg, #E8F5E9, #C8E6C9, #A5D6A7);
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    #content_container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #form_container, #login_container {
+        width: 50%;
+        height: 70%;
+        border-radius: 1em;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(0.5rem);
+        -webkit-backdrop-filter: blur(0.5rem);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    #form_header_container {
+        width: 100%;
+        height: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #form_header {
+        font-family: 
+        font-size: 25px;
+        color: rgb(13, 8, 80);
+        border-radius: 25%;
+        padding: 0.5em;
+    }
+
+    #form_content_container {
+        width: 100%;
+        height: 75%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #form_content_inner_container {
+        width: 70%;
+        height: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #form_content_inner_container input, #form_content_inner_container select {
+        width: 80%;
+        height: 10%;
+        margin: 0.5em;
+        border: none;
+        border-radius: 2em;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(0.5rem);
+        -webkit-backdrop-filter: blur(0.5rem);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding-left: 1em;
+    }
+
+    #form_content_inner_container input:hover, #form_content_inner_container select:hover {
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.6);
+    }
+
+    #button_container {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    #button_container button {
+        width: 80%;
+        height: 80%;
+        border: none;
+        border-radius: 2em;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(0.5rem);
+        -webkit-backdrop-filter: blur(0.5rem);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgb(12, 132, 100);
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        font-size: 1em;
+    }
+
+    #button_container button:hover {
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.6);
+    }
+</style>
+</html>

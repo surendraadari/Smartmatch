@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="view.css">
+</head>
+<body>
+    <div id="content_container">
+        <div id="header_container">
+            <h2 id="header">Hi, <span id="user_name"></span>!</h2>
+        </div>
+        <div id="photo">
+            <img src="" alt="Profile Picture" id="profile-picture">
+            <input type="file" id="photo_upload" accept="image/*" onchange="uploadPhoto()">
+            <button onclick="uploadPhoto()">Upload Photo</button>
+        </div>
+        <div id="professional_content">
+            <div id="resume">
+                <img src="resume.png" alt="Resume">
+                <input type="file" id="resume_upload" accept=".pdf,.doc,.docx">
+                <button onclick="uploadResume()">Upload Resume</button>
+            </div>
+            <div id="companies">
+                <h3>Companies Coming to Campus Interviews</h3>
+                <ul id="companies_list"></ul>
+                <div class="content">
+                    <section id="placements">
+                        <div class="company-column" id="column1">
+                            <ul class="company-list" id="company-list1">
+                                <!-- First set of companies will be inserted here -->
+                            </ul>
+                        </div>
+                        <div class="company-column" id="column2">
+                            <ul class="company-list" id="company-list2">
+                                <!-- Second set of companies will be inserted here -->
+                            </ul>
+                        </div>
+                        <div class="company-column" id="column3">
+                            <ul class="company-list" id="company-list3">
+                                <!-- Third set of companies will be inserted here -->
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div id="recommended_companies">
+                <h3>Companies Matching Your Skills</h3>
+                <ul id="recommended_companies_list"></ul>
+            </div>
+            <div id="placements_material">
+                <img src="https://www.avanthicollege.ac.in/assets/images/about/placements_all.jpg" alt="Placements Material" style="width: 70px;">
+                <button onclick="viewPlacementsMaterial()">View Placements Material</button>
+            </div>
+            <div id="aptitude">
+                <img src="https://www.avanthicollege.ac.in/assets/images/about/placements_all.jpg" alt="Aptitude" style="width: 70px;">
+                <button onclick="viewAptitude()">View Aptitude Material</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+    <script src="view.js"></script>
+</body>
+</html>

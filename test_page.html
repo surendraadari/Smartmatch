@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .question h3 {
+            margin-bottom: 10px;
+        }
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        .buttons button:hover {
+            background-color: #45a049;
+        }
+        .correct {
+            background-color: #d4edda;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Online Test</h1>
+    </div>
+    <div class="timer" id="timer">20:00</div>
+    <div class="buttons">
+        <button id="start-button" onclick="startTest()">Start Test</button>
+    </div>
+    <div id="test" style="display:none;">
+        <div class="section" id="aptitude-reasoning">
+            <h2>Aptitude & Reasoning</h2>
+            <div class="question" id="ar-q1">
+                <h3>Q1. Introducing a boy, a girl said, “He is the son of the daughter of the father of my uncle.” How is the boy related to the girl?</h3>
+                <div><input type="radio" name="ar-q1" value="a">a. Cousin</div>
+                <div><input type="radio" name="ar-q1" value="b">b. Nephew</div>
+                <div><input type="radio" name="ar-q1" value="c">c. Uncle</div>
+                <div><input type="radio" name="ar-q1" value="d">d. Son-in-law</div>
+            </div>
+            <div class="question" id="ar-q2">
+                <h3>Q2. Neha Kavi moved a distance of 75 metres towards the north. She then turned to her left and walked for 25 metres, turned left again and walked 80 metres. Finally, she turned to the right at an angle of 45º. In which direction was she moving finally?</h3>
+                <div><input type="radio" name="ar-q2" value="a">a. North-east</div>
+                <div><input type="radio" name="ar-q2" value="b">b. North-west</div>
+                <div><input type="radio" name="ar-q2" value="c">c. South</div>
+                <div><input type="radio" name="ar-q2" value="d">d. South-west</div>
+            </div>
+            <div class="question" id="ar-q3">
+                <h3>Q3. One day, Dileep left his home and walked 10 km southwards, turned right and walked 5 km, turned right and walked 10 km, walked left and then walked 10 km. How many kilometres will he have to walk to reach his home straight?</h3>
+                <div><input type="radio" name="ar-q3" value="a">a. 10 km</div>
+                <div><input type="radio" name="ar-q3" value="b">b. 15 km</div>
+                <div><input type="radio" name="ar-q3" value="c">c. 20 km</div>
+                <div><input type="radio" name="ar-q3" value="d">d. 25 km</div>
+            </div>
+            <div class="question" id="ar-q4">
+                <h3>Q4. Tanay is standing facing north. Turning to his right, he walks 25 metres. He then turns to his left and walks 30 metres. He, further, walks 25 metres to his right. He then walks to his right again and walks 55 metres. Finally, he turns to the right and walks 40 metres. In which direction is he now from his starting point?</h3>
+                <div><input type="radio" name="ar-q4" value="a">a. South-west</div>
+                <div><input type="radio" name="ar-q4" value="b">b. South</div>
+                <div><input type="radio" name="ar-q4" value="c">c. North-west</div>
+                <div><input type="radio" name="ar-q4" value="d">d. South-east</div>
+            </div>
+            <div class="question" id="ar-q5">
+                <h3>Q5. Kaveri walks 10 km towards North. From there she walks 6 km towards South. Then, she walks 3 km towards East. How far and in which direction is she with reference to her starting point?</h3>
+                <div><input type="radio" name="ar-q5" value="a">a. 10km Northwest</div>
+                <div><input type="radio" name="ar-q5" value="b">b. 6km Southwest</div>
+                <div><input type="radio" name="ar-q5" value="c">c. 5km Southwest</div>
+                <div><input type="radio" name="ar-q5" value="d">d. 5km Northeast</div>
+            </div>
+        </div>
+        <div class="section" id="verbal-ability">
+            <h2>Verbal Ability</h2>
+            <div class="question" id="va-q1">
+                <h3>Q1. The small child does whatever his father was done.</h3>
+                <div><input type="radio" name="va-q1" value="a">a. has done</div>
+                <div><input type="radio" name="va-q1" value="b">b. did</div>
+                <div><input type="radio" name="va-q1" value="c">c. does</div>
+                <div><input type="radio" name="va-q1" value="d">d. had done</div>
+                <div><input type="radio" name="va-q1" value="e">e. No correction required</div>
+            </div>
+            <div class="question" id="va-q2">
+                <h3>Q2. You need not come unless you want to.</h3>
+                <div><input type="radio" name="va-q2" value="a">a. You don't need to come unless you want to</div>
+                <div><input type="radio" name="va-q2" value="b">b. You come only when you want to</div>
+                <div><input type="radio" name="va-q2" value="c">c. You come unless you don't want to</div>
+                <div><input type="radio" name="va-q2" value="d">d. You needn't come until you don't want to</div>
+                <div><input type="radio" name="va-q2" value="e">e. No correction required</div>
+            </div>
+            <div class="question" id="va-q3">
+                <h3>Q3. Extreme old age when a man behaves like a fool</h3>
+                <div><input type="radio" name="va-q3" value="a">a. Imbecility</div>
+                <div><input type="radio" name="va-q3" value="b">b. Senility</div>
+                <div><input type="radio" name="va-q3" value="c">c. Dotage</div>
+                <div><input type="radio" name="va-q3" value="d">d. Superannuation</div>
+            </div>
+            <div class="question" id="va-q4">
+                <h3>Q4. The study of ancient societies</h3>
+                <div><input type="radio" name="va-q4" value="a">a. Anthropology</div>
+                <div><input type="radio" name="va-q4" value="b">b. Archaeology</div>
+                <div><input type="radio" name="va-q4" value="c">c. History</div>
+                <div><input type="radio" name="va-q4" value="d">d. Ethnology</div>
+            </div>
+            <div class="question" id="va-q5">
+                <h3>Q5. A person of good understanding knowledge and reasoning power</h3>
+                <div><input type="radio" name="va-q5" value="a">a. Expert</div>
+                <div><input type="radio" name="va-q5" value="b">b. Intellectual</div>
+                <div><input type="radio" name="va-q5" value="c">c. Snob</div>
+                <div><input type="radio" name="va-q5" value="d">d. Literate</div>
+            </div>
+        </div>
+        <div class="section" id="coding-section">
+            <h2>Coding Section</h2>
+            <div class="question" id="coding-q1">
+                <h3>Q1. Write a JavaScript function to count the number of vowels in a given string.</h3>
+                <textarea id="code1" rows="10" cols="50"></textarea>
+            </div>
+            <div class="question" id="coding-q2">
+                <h3>Q2. Write a JavaScript function to reverse a string.</h3>
+                <textarea id="code2" rows="10" cols="50"></textarea>
+            </div>
+        </div>
+        <div class="buttons">
+            <button onclick="submitTest()">Submit Test</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let timeLeft = 1200; // 20 minutes in seconds
+    let timerInterval;
+
+    function startTest() {
+        document.getElementById('start-button').style.display = 'none';
+        document.getElementById('test').style.display = 'block';
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            if (seconds < 10) seconds = '0' + seconds;
+            document.getElementById('timer').innerText = `${minutes}:${seconds}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitTest();
+            } else {
+                timeLeft--;
+            }
+        }, 1000);
+    }
+
+    function submitTest() {
+        clearInterval(timerInterval);
+
+        const arCorrectAnswers = {
+            'ar-q1': 'b',
+            'ar-q2': 'a',
+            'ar-q3': 'a',
+            'ar-q4': 'b',
+            'ar-q5': 'd'
+        };
+
+        const vaCorrectAnswers = {
+            'va-q1': 'a',
+            'va-q2': 'e',
+            'va-q3': 'c',
+            'va-q4': 'b',
+            'va-q5': 'b'
+        };
+
+        let scoreAR = 0;
+        let scoreVA = 0;
+
+        for (const [question, answer] of Object.entries(arCorrectAnswers)) {
+            const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+            if (selectedAnswer && selectedAnswer.value === answer) {
+                scoreAR++;
+                document.getElementById(question).classList.add('correct');
+            } else {
+                document.getElementById(question).classList.add('incorrect');
+            }
+        }
+
+        for (const [question, answer] of Object.entries(vaCorrectAnswers)) {
+            const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+            if (selectedAnswer && selectedAnswer.value === answer) {
+                scoreVA++;
+                document.getElementById(question).classList.add('correct');
+            } else {
+                document.getElementById(question).classList.add('incorrect');
+            }
+        }
+
+        const code1 = document.getElementById('code1').value.trim();
+        const code2 = document.getElementById('code2').value.trim();
+        let scoreCoding = 0;
+
+        // Correct answers for coding section (simplified)
+        const correctCode1 = `function countVowels(str) {
+    let count = 0;
+    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    for (const char of str.toLowerCase()) {
+        if (vowels.includes(char)) {
+            count++;
+        }
+    }
+    return count;
+}`;
+
+        const correctCode2 = `function reverseString(str) {
+    return str.split('').reverse().join('');
+}`;
+
+        if (code1 === correctCode1) scoreCoding++;
+        if (code2 === correctCode2) scoreCoding++;
+
+        const finalMessage = `Aptitude & Reasoning Score: ${scoreAR}/5\nVerbal Ability Score: ${scoreVA}/5\nCoding Section Score: ${scoreCoding}/2`;
+        alert(finalMessage);
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot with Firebase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div>
+        <h1 style="font-size: 100PX;">SMART-MENTEE CONNECT</h1>
+    </div>
+    <div id="code-container">
+        <H4>CHAT WITH THE SENIORS/MENTORS/TEACHERS/PROFESSORS</H4>
+        <input type="text" id="code-input" placeholder="Enter code or generate new">
+        <button id="generate-button">Generate Code</button>
+        <button id="join-button">Join Chat</button>
+    </div>
+    <div id="chat-container" style="display: none;">
+        <div id="chat-box">
+            
+            <div id="chat-log"></div>
+            <div id="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Type your message here...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="chat.js"></script>
+</body>
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Montserrat', sans-serif;
+        background: -webkit-linear-gradient(25deg, #E8F5E9, #C8E6C9, #A5D6A7, #81C784, #66BB6A);
+      }
+      
+      #code-container {
+        width: 100%;
+        height: 80%;
+        background-color: #F5F5F5;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 50px -20px #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      #chat-container {
+        width: 100%;
+        height: 100%;
+        background-color: #F5F5F5;
+        box-shadow: 0 0 50px -20px #000;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      #chat-box {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      
+      #chat-log {
+        flex-grow: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background-color: #F5F5F5;
+        border-bottom: 2px solid #66BB6A;
+      }
+      
+      #chat-input-container {
+        display: flex;
+        border-top: 2px solid #66BB6A;
+      }
+      
+      #chat-input {
+        flex-grow: 1;
+        padding: 15px;
+        border: none;
+        font-size: 16px;
+        border-right: 2px solid #66BB6A;
+      }
+      
+      #send-button {
+        width: 100px;
+        background-color: #66BB6A;
+        border: none;
+        color: white;
+        padding: 15px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      
+      #send-button:hover {
+        background-color: #81C784;
+      }
+      
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #66BB6A;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      
+      button:hover {
+        background-color: #81C784;
+      }
+      
+      input {
+        width: 80%;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #66BB6A;
+        border-radius: 5px;
+      }
+      
+</style>
+<script>
+    // Your web app's Firebase configuration
+var firebaseConfig = {
+    apiKey: "AIzaSyBNuOdMzfi1V9K_WC0qj57D2PAX6R8u_TI",
+    authDomain: "seniorchat-ea4c5.firebaseapp.com",
+    projectId: "seniorchat-ea4c5",
+    storageBucket: "seniorchat-ea4c5.appspot.com",
+    messagingSenderId: "898789407219",
+    appId: "1:898789407219:web:5fa19a7e58fd8c16a63a86",
+    measurementId: "G-PQQ22WJ2ZB"
+  };
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  
+  const database = firebase.database();
+  
+  let chatCode = null;
+  
+  document.getElementById('generate-button').addEventListener('click', generateCode);
+  document.getElementById('join-button').addEventListener('click', joinChat);
+  document.getElementById('send-button').addEventListener('click', sendMessage);
+  
+  function generateCode() {
+    chatCode = Math.floor(100000 + Math.random() * 900000).toString();
+    alert('Your chat code is: ' + chatCode);
+    document.getElementById('code-input').value = chatCode;
+  }
+  
+  function joinChat() {
+    chatCode = document.getElementById('code-input').value.trim();
+    if (chatCode) {
+        document.getElementById('code-container').style.display = 'none';
+        document.getElementById('chat-container').style.display = 'flex';
+        listenForMessages();
+    } else {
+        alert('Please enter a valid code.');
+    }
+  }
+  
+  function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const message = input.value.trim();
+  
+    if (message && chatCode) {
+        const messagesRef = database.ref('chats/' + chatCode + '/messages');
+        messagesRef.push({
+            message: message,
+            timestamp: Date.now()
+        });
+  
+        input.value = '';
+    }
+  }
+  
+  function listenForMessages() {
+    const messagesRef = database.ref('chats/' + chatCode + '/messages');
+    messagesRef.on('child_added', function(snapshot) {
+        const message = snapshot.val();
+        displayMessage(message.message);
+    });
+  }
+  
+  function displayMessage(message) {
+    const chatLog = document.getElementById('chat-log');
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    messageElement.className = 'message';
+    chatLog.appendChild(messageElement);
+    chatLog.scrollTop = chatLog.scrollHeight; // Auto-scroll to the latest message
+  }
+  
+</script>
+</html>

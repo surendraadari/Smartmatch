@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMatch - Campus Placements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+        }
+
+        header {
+            background-color: #067364;
+            /* Dark green */
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            /* Adjust the height of the logo as needed */
+        }
+
+        .marquee {
+            width: 80%;
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .marquee p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-100%, 0);
+            }
+        }
+
+        .login {
+            background-color: white;
+            /* White buttons */
+            color: #067364;
+            /* Dark green text */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .login:hover {
+            background-color: #067364;
+            /* Dark green background on hover */
+            color: white;
+            /* White text on hover */
+        }
+
+
+
+        .content {
+            margin-top: 70px;
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #offCampusButton {
+            background-color: #067364;
+            color: white;
+        }
+
+        #viewcompanies {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #2980b9, #2c3e50);
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #viewcompanies:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styles for the company list container */
+        .company-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+
+        /* Styles for each company */
+            .company {
+            position: relative;
+            flex-basis: calc(50% - 20px);
+            padding: 20px;
+            border-radius: 10px;
+            background: linear-gradient(to right, #f3f3f3, #dddddd);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .company:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .company-name {
+            flex-grow: 1;
+        }
+
+        .apply-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .apply-button:hover {
+            background-color: #0056b3;
+        }
+
+
+
+
+                /* Styles for the search container */
+        .search-container {
+            display: flex; 
+            align-items: center;
+            max-width: 400px; 
+        }
+
+        /* Styles for the search input */
+        .search-input {
+            flex-grow: 1; 
+            padding: 8px; 
+            border: 1px solid #ccc;
+            border-radius: 5px; 
+        }
+
+        /* Styles for the search button */
+        .search-button {
+            background-color: #007bff;
+            color: #fff; 
+            border: none; 
+            padding: 8px 16px; 
+            border-radius: 5px;
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+        }
+
+        .search-button:hover {
+            background-color: #0056b3; 
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="depositphotos_197321148-stock-illustration-logo-swoosh-global-red-letter-transformed-removebg-preview.png" alt="Logo">
+        </div>
+        <div class="marquee">
+            <p>Welcome to SmartMatch - Precision Career Mapping for Campus Placements</p>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search Here..." class="search-input">
+            <button class="search-button">Search</button>
+        </div>
+
+    </header>
+
+    <nav>
+        <!-- Content for the right side of the page has been removed -->
+    </nav>
+
+    <div class="content">
+        <section id="placements">
+            <ul class="company-list">
+                <li class="company">Tata Group <a href="https://www.tata.com/careers" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Aditya Birla Group <a href="https://careers.adityabirla.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Infosys <a href="https://www.infosys.com/careers/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">HCL Technologies <a href="https://www.hcltech.com/careers" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Wipro <a href="https://careers.wipro.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Citibank <a href="https://jobs.citi.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">HP <a href="https://jobs.hp.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Sony <a href="https://www.sonyjobs.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Samsung <a href="https://www.samsung.com/us/careers/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">DHL <a href="https://www.dhl.com/global-en/home/careers.html" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Google <a href="https://careers.google.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Amazon <a href="https://www.amazon.jobs/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Apple <a href="https://www.apple.com/careers/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Microsoft <a href="https://careers.microsoft.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">IBM <a href="https://www.ibm.com/employment/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Cognizant <a href="https://careers.cognizant.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Flipkart <a href="https://www.flipkartcareers.com/" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Morgan Stanley <a href="https://www.morganstanley.com/people-opportunities/career" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">LG <a href="https://www.lg.com/global/careers" target="_blank"><button class="apply-button">Apply</button></a></li>
+                <li class="company">Adobe <a href="https://adobe.wd5.myworkdayjobs.com/en-US/external_experienced" target="_blank"><button class="apply-button">Apply</button></a></li>
+            </ul>
+        </section>
+    </div>
+
+</body>
+
+</html>

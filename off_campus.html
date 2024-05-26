@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartMatch - Campus Placements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+        }
+
+        header {
+            background-color: #17d5bc;
+            /* Dark green */
+            color: white;
+            padding: 10px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 130%;
+        }
+
+        .logo img {
+            height: 50px;
+            /* Adjust the height of the logo as needed */
+        }
+
+        
+
+        @keyframes marquee {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-100%, 0);
+            }
+        }
+
+        .login {
+            background-color: white;
+            /* White buttons */
+            color: #16eace;
+            /* Dark green text */
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .login:hover {
+            background-color: #067364;
+            /* Dark green background on hover */
+            color: white;
+            /* White text on hover */
+        }
+
+
+
+
+        .content {
+            margin-top: 70px;
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #viewcompanies {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #2980b9, #2c3e50);
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #viewcompanies:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #styledImage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 800px;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #styledImage:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="depositphotos_197321148-stock-illustration-logo-swoosh-global-red-letter-transformed-removebg-preview.png" alt="Logo">
+        </div>
+        <div class="marquee">
+            <p>Welcome to SmartMatch - Precision Career Mapping for Campus Placements</p>
+        </div>
+    </header>
+
+    <nav>
+        <!-- Content for the right side of the page has been removed -->
+    </nav>
+
+
+    <div class="content">
+        <section class="marquee"  id="placements">
+                    <div class="marquee">
+                        <p> <a id="viewcompanies"  href="./companies.html">Click here to view Top 20 Companies</a></p>
+                    </div>
+            <br>
+            <img src="https://t3.ftcdn.net/jpg/05/46/43/66/360_F_546436642_Qm6gTWHsyfN7Vz6Fo6IoDrUenEVjCsGH.jpg" alt="" id="styledImage">
+
+        </section>
+    </div>
+
+</body>
+
+</html>
